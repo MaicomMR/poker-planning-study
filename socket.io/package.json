@@ -1,5 +1,6 @@
 {
   "name": "socket-planning-poker",
+  "start": "node server.js",
   "version": "0.0.1",
   "description": "An app to study about socket and nodeJS",
   "dependencies": {
