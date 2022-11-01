@@ -32,6 +32,40 @@
     console.log(roomName);
     document.getElementById("roomId").innerHTML = roomName;
     document.getElementById("roomURL").innerHTML = window.location.href;
+
+    const request = obj => {
+
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(obj.method, obj.url, false);
+        xhr.send();
+
+        xhr.addEventListener('load', () => {
+            console.log('evento ok');
+            if (xhr.status >= 200 && xhr.status < 300) {
+                console.log(xhr.status);
+            } else {
+                console.log(xhr.status);
+            }
+        })
+    }
+
+
+
+    window.onload = function () {
+        request({
+            method: 'GET',
+            url: '../check-and-open-room/' + roomName,
+
+            // sucess(response){
+            //     console.log(response);
+            // },
+            // error(errorText) {
+            //     console.log(errorText);
+            // }
+        });
+    };
+
 </script>
 
 </html>

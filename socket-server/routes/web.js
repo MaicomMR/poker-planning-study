@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const roomController = require('../controllers/roomController');
 
 var path = require('path')
 
@@ -16,8 +17,9 @@ router.get('/table', (req, res) => {
 });
 
 router.get('/room/:userId', (req, res) => {
-    console.log('Sala ' + req.params.userId + ' criada');
     res.sendFile(path.resolve(__dirname + '/../views/room.html'));
 });
+
+router.get('/check-and-open-room/:roomId', roomController.checkRoom);
 
 module.exports = router;
