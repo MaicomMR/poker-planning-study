@@ -19,53 +19,69 @@
         const roomRoute = window.location.href;
         var roomName = roomRoute.split('/').pop();
     </script>
-
 </head>
 
 <body>
+
     Sala: <span id="roomId"></span> <br />
-    Link para acessar: <span id="roomURL"></span>
+    Link para acessar: <span id="roomURL"></span><br/>
+
+    Nota escolhida: <span id="nota"></span>
+
+    <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+
+
+    <div class="cardVote"> 1 </div>
+    <div class="cardVote"> 2 </div>
+    <div class="cardVote"> 3 </div>
+    <div class="cardVote"> 5 </div>
+    <div class="cardVote"> 8 </div>
+    <div class="cardVote"> 13 </div>
+    <div class="cardVote"> 21 </div>
+    <div class="cardVote"> 34 </div>
 </body>
 
-
 <script>
+    var form = document.getElementById('form');
+    var input = document.getElementById('input');
+
     console.log(roomName);
     document.getElementById("roomId").innerHTML = roomName;
     document.getElementById("roomURL").innerHTML = window.location.href;
 
-    const request = obj => {
-
-        const xhr = new XMLHttpRequest();
-
-        xhr.open(obj.method, obj.url, false);
-        xhr.send();
-
-        xhr.addEventListener('load', () => {
-            console.log('evento ok');
-            if (xhr.status >= 200 && xhr.status < 300) {
-                console.log(xhr.status);
-            } else {
-                console.log(xhr.status);
-            }
-        })
-    }
-
-
-
     window.onload = function () {
-        request({
-            method: 'GET',
-            url: '../check-and-open-room/' + roomName,
-
-            // sucess(response){
-            //     console.log(response);
-            // },
-            // error(errorText) {
-            //     console.log(errorText);
-            // }
-        });
+    fetch('../check-and-open-room/' + roomName)
+        .then((response) => response.json())
+        .then((data) => console.log(data));
     };
 
+    form.addEventListener('submit', function(e) {
+    e.preventDefault();
+    if (input.value) {
+    messageEvent = {
+            message: input.value,
+            roomId: roomName
+        }
+      socket.emit('room_message', messageEvent);
+      input.value = '';
+    }
+  });
+
+  socket.on('room_message' + roomName, function(msg) {
+    var item = document.createElement('li');
+    item.textContent = msg;
+    document.getElementById("nota").innerHTML = msg;
+  });
 </script>
+
+
+<style>
+    .cardVote {
+        background-color: aqua;
+        margin: 5px;
+    }
+</style>
 
 </html>

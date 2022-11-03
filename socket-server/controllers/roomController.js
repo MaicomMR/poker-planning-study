@@ -13,9 +13,9 @@ exports.checkRoom = (req, res) => {
 
     io.on("connection", socket => {
         socket.join(req.params.roomId);
-        console.log('conectado na sala: ' + req.params.roomId)
+        console.log('conectado na sala: ' + req.params.roomId);
     });
     io.sockets.adapter.rooms;
     
-    res.send('conectado na sala: ' + req.params.roomId);
+    // res.send('conectado na sala: ' + req.params.roomId);
 }

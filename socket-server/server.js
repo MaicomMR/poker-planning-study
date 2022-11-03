@@ -9,14 +9,19 @@ const routesFile = require('./routes/web');
 app.use('/', routesFile);
 
 io.on('connection', (socket) => {
-  console.log('a user connected');
-  console.log(socket.id);
+  console.log('a user connected: ' + socket.id);
+  socket.broadcast.emit('hi');
   
   socket.on('disconnect', () => {
     console.log('user disconnected');
   });
-  socket.on('chat message', (msg) => {
-    console.log('message: ' + msg);
+
+  socket.on('room_message', (object) => {
+    console.log('------');
+    console.log('msg:' + object.message);
+    console.log('room:' + object.roomId);
+
+    io.emit('room_message' + object.roomId, object.message);
   });
 });
 
