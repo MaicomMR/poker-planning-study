@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sala A</title>
+    <link rel="stylesheet" href="style.css">
 
     <style>
     </style>
@@ -32,18 +33,54 @@
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
 
+    <div class="cardsHeader">
+        <span class="revealCardsButton">Revelar cartas</span>
+    </div>
+    <div class="cards" id="cardsBox">
+    </div>
 
-    <div class="cardVote"> 1 </div>
-    <div class="cardVote"> 2 </div>
-    <div class="cardVote"> 3 </div>
-    <div class="cardVote"> 5 </div>
-    <div class="cardVote"> 8 </div>
-    <div class="cardVote"> 13 </div>
-    <div class="cardVote"> 21 </div>
-    <div class="cardVote"> 34 </div>
 </body>
 
 <script>
+    // --- BARALHO
+    cards = [1, 2, 3, 5, 8, 13, 21, 34];
+    // cards = [1, 2, 3];
+
+    // CREATE CARDS ELEMENTS
+    cards.forEach(cardNumber => {
+        const newCardElement = document.createElement('div');
+        newCardElement.classList.add('cardVote');
+        newCardElement.setAttribute("id", 'cardVote');
+        newCardElement.textContent = cardNumber;
+
+        newCardElement.onclick = function () {
+            markCard(cardNumber);
+        };
+
+        const cardsBox = document.getElementById('cardsBox');
+        cardsBox.appendChild(newCardElement);
+    });
+
+    // FOCUS ON LAST SELECTED CARD
+    function markCard(cardNumber) {
+        const unSelectedCards = Array.from(
+            document.getElementsByClassName('cardVote')
+        );
+        const selectedCards = Array.from(
+            document.getElementsByClassName('selectedCard')
+        );
+
+        const allCards = unSelectedCards.concat(selectedCards);
+
+        for (card in allCards) {
+            if (allCards[card].outerText == cardNumber) {
+                allCards[card].classList = "selectedCard";
+            } else {
+                allCards[card].classList = "cardVote";
+            }
+        }
+    }
+
     var form = document.getElementById('form');
     var input = document.getElementById('input');
 
@@ -59,13 +96,14 @@
 
     form.addEventListener('submit', function(e) {
     e.preventDefault();
+
     if (input.value) {
-    messageEvent = {
-            message: input.value,
-            roomId: roomName
-        }
-      socket.emit('room_message', messageEvent);
-      input.value = '';
+            messageEvent = {
+                message: input.value,
+                roomId: roomName
+            }
+        socket.emit('room_message', messageEvent);
+        input.value = '';
     }
   });
 
@@ -74,14 +112,65 @@
     item.textContent = msg;
     document.getElementById("nota").innerHTML = msg;
   });
+
+  function checkCard(selectedCard) {
+    console.log(selectedCard);
+  }
+
 </script>
 
 
 <style>
-    .cardVote {
-        background-color: aqua;
-        margin: 5px;
+    body {
+        margin: 0;
     }
+    .cardsHeader {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .revealCardsButton {
+        padding: 10px;
+        margin: 5px;
+        font-size: 2em;
+        background-color: rgb(186, 69, 69);
+        transition: 0.5s;
+    }
+
+    .revealCardsButton:hover {
+        background-color: rgb(163, 63, 63)
+    }
+
+    .cards {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+    }
+    .cardVote, .selectedCard {
+        border-radius: 5px;
+        text-align: center;
+        background-color: rgb(94, 191, 191);
+        margin: 10px;
+        width: 80px;
+        height: 120px;
+        transition: 1s;
+
+        box-shadow:
+      0 1px 1px hsl(0deg 0% 0% / 0.075),
+      0 2px 2px hsl(0deg 0% 0% / 0.075),
+      0 4px 4px hsl(0deg 0% 0% / 0.075),
+      0 8px 8px hsl(0deg 0% 0% / 0.075),
+      0 16px 16px hsl(0deg 0% 0% / 0.075)
+    ;
+    }
+
+    .selectedCard {
+        background-color: rgb(21, 201, 201);
+        width: 110px;
+        height: 180px;
+    }
+
 </style>
 
 </html>
