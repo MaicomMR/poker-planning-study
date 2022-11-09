@@ -1,2 +1,4 @@
 socket-client/node_modules
 socket-server/node_modules
+node_modules
+dist/bundle.js

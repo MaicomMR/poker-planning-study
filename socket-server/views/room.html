@@ -28,8 +28,19 @@
     Link para acessar: <span id="roomURL"></span><br/>
 
     Nota escolhida: <span id="nota"></span>
+    <br><br><br>
+    <div>
+        Participantes:
+        <span class="memberList" id="memberList">
+
+        </span>
+    </div>
+
+
+    <br><br><br>
 
     <form id="form" action="">
+        Digite seu nome:
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
 
@@ -110,6 +121,10 @@
   socket.on('room_message' + roomName, function(msg) {
     var item = document.createElement('li');
     item.textContent = msg;
+
+    // participantes
+    memberList = document.getElementById("memberList");
+    memberList.appendChild(item);
     document.getElementById("nota").innerHTML = msg;
   });
 
@@ -134,12 +149,12 @@
         padding: 10px;
         margin: 5px;
         font-size: 2em;
-        background-color: rgb(186, 69, 69);
+        background-color: rgb(75, 179, 172);
         transition: 0.5s;
     }
 
     .revealCardsButton:hover {
-        background-color: rgb(163, 63, 63)
+        background-color: rgb(63, 163, 156)
     }
 
     .cards {
