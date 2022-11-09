@@ -6,6 +6,6 @@ const server = http.createServer(app);
 const routesFile = require('./routes/web');
 app.use('/', routesFile);
 
-server.listen(3001, () => {
-  console.log('listening on *:3001');
+server.listen(4000, () => {
+  console.log('listening on *:4000');
 });

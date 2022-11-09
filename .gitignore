@@ -1,4 +1,5 @@
 socket-client/node_modules
+socket-client/public/assets/js/mix
 socket-server/node_modules
 node_modules
 dist/bundle.js
