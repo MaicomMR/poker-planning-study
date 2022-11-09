@@ -1,12 +1,12 @@
-import _ from 'lodash';
+const express = require('express');
+const app = express();
+const http = require('http');
+const server = http.createServer(app);
 
-function component() {
-    const element = document.createElement('div');
-  
-  // Lodash, now imported by this script
-  element.innerHTML = _.join(['Hello', 'webpack'], ' ');
-  
-    return element;
-  }
-  
-  document.body.appendChild(component());
+app.get('/', (req, res) => {
+  res.send('<h1>Hello world</h1>');
+});
+
+server.listen(3000, () => {
+  console.log('listening on *:3000');
+});
