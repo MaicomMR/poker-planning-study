@@ -5,6 +5,8 @@ const path = require('path');
 const server = http.createServer(app);
 const routes = require('./routes');
 
+app.use(express.static(path.resolve(__dirname, '../dist')));
+
 app.use(routes);
 app.set('views', path.join(__dirname, '../dist/views'));
 app.set('view engine', 'ejs');
