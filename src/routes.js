@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const createRoomController = require('./controllers/createRoomController')
+const utilsController = require('./controllers/utilsController');
+const roomController = require('./controllers/roomController');
 
-router.get('/', createRoomController.createRoom);
+router.get('/', utilsController.index);
+
+router.get('/room/:roomId', roomController.checkRoom);
 
 module.exports = router;

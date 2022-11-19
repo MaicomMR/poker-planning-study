@@ -5,14 +5,54 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+
+    <style>
+        .screen {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 500;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+            align-items: center;
+        }
+
+        .main-button {
+            width: 500px;
+            text-align: center;
+            padding: 10px;
+            font-size: 2em;
+            margin: 8px;
+        }
+    </style>
+
 </head>
 <body>
 
-    <div id="asd" onclick="testeFun()">Criar nova sala</div>
-    <div>Entrar em uma sala existente</div>
+    <div class="screen">
+        <span onclick="newRoom()" class="main-button" style="background-color: #72b590" id="create-room-button">
+            Criar uma sala
+        </span>
+
+        <span class="main-button" style="background-color: #728fb5">
+            Entrar em uma sala já existente <br>
+            <input type="text" name="" id="">
+        </span>
+    </div>
 
 </body>
 
 <script src="/bundle.js"></script>
+<script src="https://cdn.socket.io/4.5.3/socket.io.min.js" integrity="sha384-WPFUvHkB1aHA5TDSZi6xtDgkF0wXJcIIxXhC6h8OT8EH3fC5PWro5pWJ1THjcfEi" crossorigin="anonymous"></script>
+<script>
+    const socket = io();
+
+    function newRoom() {
+        console.log('newRoom');
+        console.log(socket.id);
+        window.location.href = '../room/' + socket.id.slice(0, 6);
+    }
+</script>
 
 </html>
